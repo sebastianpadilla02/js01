@@ -20,6 +20,12 @@ const addTask = () => {
     document.getElementById('task').value = '';
     renderTasks();
 }
+
+const clearTasks = () => {
+    tasks.length = 0;
+    renderTasks();
+}
+
 const renderTasks = () => {
     const tasksDiv = document.getElementById('tasks');
     if (tasks.length === 0) {
@@ -33,6 +39,25 @@ const renderTasks = () => {
         const li = document.createElement('li');
         li.innerHTML = task.name;
         taskList.appendChild(li);
+        const clearButton = document.createElement('button');
+        clearButton.innerHTML = 'Clear';
+        clearButton.onclick = () => {
+            tasks.splice(tasks.indexOf(task), 1);
+            renderTasks();
+        }
+        li.appendChild(clearButton);
+        const doneButton = document.createElement('button');
+        doneButton.innerHTML = 'Done';
+        doneButton.onclick = () => {
+            task.done = !task.done;
+            renderTasks();
+        }
+        li.appendChild(doneButton);
+        if (task.done) {
+            li.style.textDecoration = 'line-through';
+        } else {
+            li.style.textDecoration = 'none';
+        }
     });
     tasksDiv.appendChild(taskList);
 }
